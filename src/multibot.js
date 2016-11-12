@@ -9,14 +9,15 @@ class MultiBot {
 	}
 
 	startServer (port) {
-		this.server.listen(port, () => {
-			console.log('Server started on port: ', port)
-		})
+		this.server.listen(port)
 	}
 
-
+	stopServer(){
+		this.server.close()
+	}
+	
 	_webHookHandler (request, response) {
-
+		return response
 	}
 
 }
