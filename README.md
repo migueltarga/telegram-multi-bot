@@ -10,3 +10,4 @@ Telegram bot application with nodejs
 ## Build Commands
 
 - `npm run test` - start unit test
+- `npm run lint` - start code linter
