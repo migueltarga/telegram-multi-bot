@@ -21,13 +21,12 @@
             "error",
             "never"
         ],
-        "no-console": [
-          "error",
-          {
-            "allow": [
-              "log"
-            ]
-          }
-        ]
+        "no-console": 0,
+        "no-unused-vars": [2, {
+          "vars": "all",
+          "args": "after-used",
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_"
+        }]
     }
 }
