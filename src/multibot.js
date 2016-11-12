@@ -1,6 +1,7 @@
 'use strict'
 
 const http = require('http')
+const TelegramUtils = require('./telegramutils')
 
 class MultiBot {
 
@@ -15,7 +16,11 @@ class MultiBot {
 	stopServer(){
 		this.server.close()
 	}
-	
+
+	addBot(token){
+		//TelegramUtils.getUsername
+	}
+
 	_webHookHandler (request, response) {
 		return response
 	}
