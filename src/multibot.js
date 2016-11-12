@@ -1,6 +1,8 @@
 
 "use strict"
 
+const http = require('http');
+
 class MultiBot {
 
   constructor() {
@@ -19,4 +21,4 @@ class MultiBot {
   }
 
 }
-module.exports = Bot
+module.exports = MultiBot
