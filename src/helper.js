@@ -1,13 +1,13 @@
 
-"use strict"
+'use strict'
 
 class Helper {
 
-  constructor() {}
+	constructor() {}
 
-  isValidToken(_token){
-    return /^\d+:[\d\w-_]+$/.test(_token)
-  }
+	isValidToken(_token){
+		return /^\d+:[\d\w-_]+$/.test(_token)
+	}
 
 }
 
