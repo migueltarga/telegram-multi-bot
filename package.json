@@ -1,0 +1,18 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "description": "Meu bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests --recursive --watch"
+  },
+  "keywords": [
+    "telegram",
+    "bot"
+  ],
+  "author": "Miguel Targa",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.5.0"
+  }
+}
