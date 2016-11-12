@@ -4,7 +4,8 @@
   "description": "Multiple Bots application for Telegram",
   "main": "index.js",
   "scripts": {
-    "test": "mocha tests --recursive --watch",
+    "test": "mocha tests --recursive",
+    "dev-test": "mocha tests --recursive --watch",
     "lint": "eslint src/ || exit 0"
   },
   "keywords": [
