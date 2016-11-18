@@ -19,6 +19,10 @@ describe('Webhook Server', function() {
     });
   });
 
+  // it('should throw invalid token', function(){
+  //   multibot.addBot('INVALID_TOKEN')
+  // });
+
   after(function () {
     multibot.stopServer();
   });
