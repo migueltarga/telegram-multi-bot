@@ -1,15 +1,20 @@
 'use strict'
 
 const http = require('http')
-const TelegramUtils = require('./telegramutils')
+//const Bot = require('./model/bot')
+//const TelegramUtils = require('./telegramutils')
+
 
 class MultiBot {
 
 	constructor() {
+		this.mongoose = require('mongoose')
 		this.server = http.createServer((req, res) => this._webHookHandler(req, res))
+		//this.pluginManager = new PluginManager(this);
 	}
 
 	startServer (port) {
+		this.mongoose.connect('mongodb://localhost/multibot')
 		this.server.listen(port)
 	}
 
@@ -17,9 +22,7 @@ class MultiBot {
 		this.server.close()
 	}
 
-	addBot(token){
-		//TelegramUtils.getUsername
-	}
+
 
 	_webHookHandler (request, response) {
 		return response
