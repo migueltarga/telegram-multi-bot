@@ -1,7 +1,7 @@
 const chai = require('chai')
 const expect = chai.expect
 const http = require('http')
-const MultiBot = require('./../src/multibot')
+const MultiBot = require('../src/multibot')
 
 
 let multibot = new MultiBot();
