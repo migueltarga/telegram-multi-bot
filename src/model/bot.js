@@ -5,6 +5,8 @@ const Schema = mongoose.Schema
 let botSchema = new Schema({
 	name: String,
 	token: { type: String, required: true, unique: true },
+	username: { type: String, required: true},
+	admin: String,
 	created_at: Date,
 	updated_at: Date
 })
