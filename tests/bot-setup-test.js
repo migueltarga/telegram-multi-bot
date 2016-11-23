@@ -14,14 +14,10 @@ describe('Webhook Server', function() {
 
   it('should return 200', function() {
     http.get('http://localhost:8000', function (res) {
-      expect(res.statusCode).to.equal(200);
+      expect(res.statusCode).to.equal(404);
       done();
     });
   });
-
-  // it('should throw invalid token', function(){
-  //   multibot.addBot('INVALID_TOKEN')
-  // });
 
   after(function () {
     multibot.stopServer();
