@@ -1,13 +1,16 @@
 'use strict'
 
 const http = require('http')
+const EventEmitter = require('events').EventEmitter;
 const Bot = require('./model/bot')
 const TelegramUtils = require('./telegramutils')
-
+const test =  require('./plugins/test');
 
 class MultiBot {
 
 	constructor(config) {
+		this.emitter = new EventEmitter();
+				new test(this.emitter)
 		this.config = config || {}
 		if(this.config.admin){
 			this.addBot(this.config.admin)
@@ -15,6 +18,7 @@ class MultiBot {
 		this.mongoose = require('mongoose')
 		this.mongoose.Promise = global.Promise
 		this.server = http.createServer((req, res) => this._webHookHandler(req, res))
+
 		return this
 	}
 
@@ -30,7 +34,7 @@ class MultiBot {
 
 	addBot(token){
 		TelegramUtils.getMe(token, (res)=>{
-			//TODO: cleanup.
+			console.log(res)
 			TelegramUtils.setWebhook(token, this.config.url)
 			let newBot = new Bot({
 				name: res.first_name,
@@ -51,15 +55,12 @@ class MultiBot {
 			response.statusCode = 404
 			return response.end()
 		}
-
 		let chunks = []
 		request.on('data', data => chunks.push(data))
 		request.on('end', () => {
 			response.end('OK!')
 			let data = Buffer.concat(chunks).toString('utf-8')
-			//console.log(data)
 			Bot.findOne({token:token[1]}).then((_bot)=>{
-				//console.log(_bot)
 				this._parseRequest(data,_bot);
 			})
 		})
@@ -79,9 +80,7 @@ class MultiBot {
     ]
     _messageTypes.forEach((messageType) => {
       if (req['message'][messageType]) {
-        console.log('messageReceived:', messageType, req)
-				//this.messageReceived(messageType, request)
-				return
+				this.emitter.emit(messageType, req)
       }
     })
   }

@@ -1,7 +1,7 @@
 const chai = require('chai')
 const expect = chai.expect
 const http = require('http')
-const TelegramUtils = require('./../src/telegramUtils')
+const TelegramUtils = require('./../src/telegramutils')
 
 
 describe('TelegramUtils Test', function() {
