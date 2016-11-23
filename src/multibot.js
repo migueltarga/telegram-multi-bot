@@ -1,16 +1,15 @@
 'use strict'
 
 const http = require('http')
-const EventEmitter = require('events').EventEmitter;
+const fs = require('fs')
+const EventEmitter = require('events');
 const Bot = require('./model/bot')
 const TelegramUtils = require('./telegramutils')
-const test =  require('./plugins/test');
 
-class MultiBot {
+class MultiBot extends EventEmitter{
 
 	constructor(config) {
-		this.emitter = new EventEmitter();
-				new test(this.emitter)
+		super();
 		this.config = config || {}
 		if(this.config.admin){
 			this.addBot(this.config.admin)
@@ -25,6 +24,7 @@ class MultiBot {
 	startServer () {
 		this.mongoose.connect(this.config.mongodb)
 		this.server.listen(this.config.port || 8000)
+		this._loadPlugins()
 	}
 
 	stopServer(){
@@ -47,7 +47,16 @@ class MultiBot {
 		})
 	}
 
-	removeBot(){}
+	_loadPlugins () {
+      fs.readdir('./src/plugins', (err, files) => {
+          if (err || !files.length) return;
+          files.forEach((file, index) => {
+							console.log('Loading Plugins: ', file);
+              let plugin = require('./plugins/' + file);
+							new plugin(this)
+          });
+      });
+    }
 
 	_webHookHandler (request, response) {
 		let token = request.url.match(/^\/(\d+:[\d\w-_]+)$/)
@@ -80,7 +89,7 @@ class MultiBot {
     ]
     _messageTypes.forEach((messageType) => {
       if (req['message'][messageType]) {
-				this.emitter.emit(messageType, req)
+				this.emit(messageType, req)
       }
     })
   }
