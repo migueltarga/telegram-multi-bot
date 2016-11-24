@@ -2,14 +2,14 @@
 
 const http = require('http')
 const fs = require('fs')
-const EventEmitter = require('events');
+const EventEmitter = require('events')
 const Bot = require('./model/bot')
 const TelegramUtils = require('./telegramutils')
 
-class MultiBot extends EventEmitter{
+class MultiBot extends EventEmitter {
 
 	constructor(config) {
-		super();
+		super()
 		this.config = config || {}
 		if(this.config.admin){
 			this.addBot(this.config.admin)
@@ -48,15 +48,15 @@ class MultiBot extends EventEmitter{
 	}
 
 	_loadPlugins () {
-      fs.readdir('./src/plugins', (err, files) => {
-          if (err || !files.length) return;
-          files.forEach((file, index) => {
-							console.log('Loading Plugins: ', file);
-              let plugin = require('./plugins/' + file);
-							new plugin(this)
-          });
-      });
-    }
+		fs.readdir('./src/plugins', (err, files) => {
+			if (err || !files.length) return
+			files.forEach((file) => {
+				console.log('Loading Plugins: ', file)
+				let plugin = require('./plugins/' + file)
+				new plugin(this)
+			})
+		})
+	}
 
 	_webHookHandler (request, response) {
 		let token = request.url.match(/^\/(\d+:[\d\w-_]+)$/)
@@ -70,29 +70,29 @@ class MultiBot extends EventEmitter{
 			response.end('OK!')
 			let data = Buffer.concat(chunks).toString('utf-8')
 			Bot.findOne({token:token[1]}).then((_bot)=>{
-				this._parseRequest(data,_bot);
+				this._parseRequest(data,_bot)
 			})
 		})
 	}
 
 	_parseRequest (data, bot) {
 		try {
-      var req = JSON.parse(data);
-    } catch(err) {
-      return;
-    }
-		req.bot = bot;
-    let _messageTypes = [
-      'text', 'audio', 'document', 'photo', 'sticker', 'video', 'voice', 'contact',
-      'location', 'new_chat_participant', 'left_chat_participant', 'new_chat_title',
-      'new_chat_photo', 'delete_chat_photo', 'group_chat_created'
-    ]
-    _messageTypes.forEach((messageType) => {
-      if (req['message'][messageType]) {
+			var req = JSON.parse(data)
+		} catch(err) {
+			return
+		}
+		req.bot = bot
+		let _messageTypes = [
+			'text', 'audio', 'document', 'photo', 'sticker', 'video', 'voice', 'contact',
+			'location', 'new_chat_participant', 'left_chat_participant', 'new_chat_title',
+			'new_chat_photo', 'delete_chat_photo', 'group_chat_created'
+		]
+		_messageTypes.forEach((messageType) => {
+			if (req['message'][messageType]) {
 				this.emit(messageType, req)
-      }
-    })
-  }
+			}
+		})
+	}
 
 }
 

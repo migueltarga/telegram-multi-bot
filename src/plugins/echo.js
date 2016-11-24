@@ -1,12 +1,13 @@
 const Plugin = require('./../plugin')
 
-module.exports = class Echo extends Plugin {
+class Echo extends Plugin {
 
-  constructor(emitter){
-    super(emitter)
-  }
+	constructor(emitter){
+		super(emitter)
+	}
 
-  onText(req){
-    console.log('OnText', req);
-  }
+	onText(req){
+		console.log('OnText', req)
+	}
 }
+module.exports = Echo
