@@ -28,7 +28,6 @@ class TelegramUtils {
 			url: `${this.baseUrl}${token}/setWebhook?url=${url}/${token}`,
 			json: true
 		}, (err, res, data) => {
-			console.log(data);
 			if (error && (err || !data || !data.ok)) return error(err)
 			if (success && data.ok) success(data.result)
 		})
